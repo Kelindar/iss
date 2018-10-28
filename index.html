@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
     <title>Let's Build: ISS Tracking</title>
@@ -15,9 +15,11 @@
 
         // Connect & subscribe to emitter
         client = emitter.connect();
-        client.subscribe({
-          key: "kYkMPEznZSajfC9T-hxNACGRA978spXZ", 
-          channel: "iss/"
+        client.on('connect', function(msg){
+          client.subscribe({
+            key: "kYkMPEznZSajfC9T-hxNACGRA978spXZ", 
+            channel: "iss/"
+          });
         });
 
         // Hook message handler
@@ -29,7 +31,6 @@
         });
 
         requestAnimationFrame(function animate(now) {
-            console.log(lat, lng)
             earth.setCenter([lat, lng]);
             requestAnimationFrame(animate);
         });
