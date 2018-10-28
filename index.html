@@ -9,8 +9,10 @@
       function initialize() {
         earth = new WE.map('earth_div');
         earth.setView([46.8011, 8.2266], 3);
-        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-          attribution: '© OpenStreetMap contributors'
+        WE.tileLayer('http://tileserver.maptiler.com/nasa/{z}/{x}/{y}.jpg', {
+          minZoom: 0,
+          maxZoom: 5,
+          attribution: 'NASA'
         }).addTo(earth);
 
         // Connect & subscribe to emitter
