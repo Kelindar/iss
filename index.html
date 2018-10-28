@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Let's Build: ISS Tracking</title>
+    <script src="http://cdn.emitter.io/js/emitter.min.js" ></script>
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <script>
+      var earth, client;
+      function initialize() {
+        earth = new WE.map('earth_div');
+        earth.setView([46.8011, 8.2266], 3);
+        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(earth);
+
+        // Connect & subscribe to emitter
+        client = emitter.connect();
+        client.subscribe({
+          key: "kYkMPEznZSajfC9T-hxNACGRA978spXZ", 
+          channel: "iss/"
+        });
+
+        // Hook message handler
+        var lat = 0, lng = 0;
+        client.on('message', function(msg){
+          let message = msg.asObject();
+          lat = message.iss_position.latitude;
+          lng = message.iss_position.longitude;
+        });
+
+        requestAnimationFrame(function animate(now) {
+            console.log(lat, lng)
+            earth.setCenter([lat, lng]);
+            requestAnimationFrame(animate);
+        });
+      }
+    </script>
+    <style>
+      html, body{padding: 0; margin: 0;}
+      #earth_div{ top: 0; right: 0; bottom: 0; left: 0; position: absolute !important;}
+    </style>   
+  </head>
+  <body onload="initialize()">
+      <div id="earth_div"></div>
+  </body>
+</html>
