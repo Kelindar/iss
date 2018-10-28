@@ -19,7 +19,7 @@ func updateLocation(e emitter.Emitter) {
 	for range ticker.C {
 		location, err := getLocation()
 		if err == nil {
-			e.Publish("e0lSZEZy_4N1MT2UXtoJnSdamGgA3Fu6", "iss/", location)
+			e.Publish("cj5aBn-8wwBrm8KNdNpZjb1LD9_TpVI6", "iss/", location)
 		}
 	}
 }

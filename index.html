@@ -5,19 +5,26 @@
     <script src="http://cdn.emitter.io/js/emitter.min.js" ></script>
     <script src="http://www.webglearth.com/v2/api.js"></script>
     <script>
-      var earth, client;
+      var earth;
       function initialize() {
+
+
         earth = new WE.map('earth_div');
         earth.setView([46.8011, 8.2266], 3);
         WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
           attribution: '© OpenStreetMap contributors'
         }).addTo(earth);
 
+
         // Connect & subscribe to emitter
-        client = emitter.connect();
-        client.on('connect', function(msg){
+        var client = emitter.connect({
+            secure: true
+        }); 
+
+        client.on('connect', function(){
+          console.log("connected")
           client.subscribe({
-            key: "kYkMPEznZSajfC9T-hxNACGRA978spXZ", 
+            key: "9tHGqKoKnG2DRPxf4Wl7olxOCUZ37F1p", 
             channel: "iss/"
           });
         });
@@ -26,6 +33,7 @@
         var lat = 0, lng = 0;
         client.on('message', function(msg){
           let message = msg.asObject();
+          console.log(message)
           lat = message.iss_position.latitude;
           lng = message.iss_position.longitude;
         });
